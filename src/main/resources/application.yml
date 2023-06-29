@@ -20,9 +20,22 @@ spring:
           uri: lb://say-hello
           predicates:
             - Path=/hi
+      httpclient:
+        wiretap: true
+        httpserver:
+          wiretap: true
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka}
     register-with-eureka: true
+
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
