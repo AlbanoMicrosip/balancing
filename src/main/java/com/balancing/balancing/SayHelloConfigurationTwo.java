@@ -38,10 +38,12 @@ class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
   @Override
   public Flux<List<ServiceInstance>> get() {
+    System.out.println("Entrando a Get");
     return Flux.interval(Duration.ofSeconds(5))  // emits every 5 seconds
       .onBackpressureDrop()  // drops emissions if the downstream can't keep up
       .flatMap(tick -> {
         try {
+          System.out.println("Dentro de Try");
           List<InetAddress> hosts = DNSUtil.resolve(serviceId);
           List<ServiceInstance> servers = hosts.stream().map(
             host -> new DefaultServiceInstance(serviceId + Math.random() * 100, serviceId, host.getHostAddress(), port, false)
