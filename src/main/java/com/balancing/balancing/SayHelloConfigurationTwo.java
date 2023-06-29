@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import com.balancing.balancing.util.DNSUtil;
 
 import java.net.InetAddress;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,24 +37,20 @@ class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
   @Override
   public Flux<List<ServiceInstance>> get() {
-    try {
-
-      List<InetAddress> hosts = DNSUtil.resolve(serviceId);
-      System.out.println("Despues de resolver");
-      for (InetAddress inet:hosts) {
-        System.out.println(inet.toString());
-      }
-
-      List<ServiceInstance> servers = hosts.stream().map(
-        host -> {
-          return new DefaultServiceInstance(serviceId+host.hashCode(), serviceId, host.getHostAddress(), port, false);
+    System.out.println("Despues de resolver");
+    return Flux.interval(Duration.ofSeconds(5))  // emits every 5 seconds
+      .onBackpressureDrop()  // drops emissions if the downstream can't keep up
+      .flatMap(tick -> {
+        try {
+          List<InetAddress> hosts = DNSUtil.resolve(serviceId);
+          List<ServiceInstance> servers = hosts.stream().map(
+            host -> new DefaultServiceInstance(serviceId + Math.random() * 100, serviceId, host.getHostAddress(), port, false)
+          ).collect(Collectors.toList());
+          return Flux.just(servers);
+        } catch (Exception e) {
+          return Flux.error(e);
         }
-      ).collect(Collectors.toList());
-//      servers.add(new DefaultServiceInstance(serviceId + "1", serviceId, "localhost", 8090, false));
-      return Flux.just(servers);
-    } catch (Exception e) {
-      return Flux.error(e);
-    }
+      });
   }
 
 }
