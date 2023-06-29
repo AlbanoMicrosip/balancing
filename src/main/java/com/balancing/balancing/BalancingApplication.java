@@ -1,5 +1,7 @@
 package com.balancing.balancing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
@@ -12,6 +14,8 @@ import reactor.core.publisher.Mono;
 @SpringBootApplication
 @RestController
 public class BalancingApplication {
+
+	private static final Logger log = LoggerFactory.getLogger(BalancingApplication.class);
 
 	private final WebClient.Builder loadBalancedWebClientBuilder;
 	private final ReactorLoadBalancerExchangeFilterFunction lbFunction;

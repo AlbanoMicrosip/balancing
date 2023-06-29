@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@LoadBalancerClient(name = "say-hello", configuration = SayHelloConfigurationTwo.class)
+@LoadBalancerClient(name = "balancing", configuration = SayHelloConfigurationTwo.class)
 public class WebClientConfig {
 
 	@LoadBalanced

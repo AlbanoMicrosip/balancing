@@ -1,6 +1,8 @@
 package com.balancing.balancing;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -20,6 +22,8 @@ public class SayHelloConfigurationTwo {
 }
 
 class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
+
+  private static final Logger log = LoggerFactory.getLogger(DnsServiceInstanceListSupplier.class);
 
   private final String serviceId;
   private final int port;
