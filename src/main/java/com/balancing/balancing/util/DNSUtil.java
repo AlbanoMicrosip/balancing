@@ -27,8 +27,10 @@ public class DNSUtil {
       Record[] result = lookup.run();
 
       if (result == null || lookup.getResult() != Lookup.SUCCESSFUL) {
+        System.out.println("result is " + result);
         log.debug("result is " + result);
         log.debug("lookup.getResult() is " + lookup.getResult());
+        System.out.println("lookup.getResult() is " + lookup.getResult());
 
         // Reseteamos el caché para evitar error cuando se reinicia el servicio al que se está intentando resolver
         Cache  defaultCache = Lookup.getDefaultCache(DClass.IN);
