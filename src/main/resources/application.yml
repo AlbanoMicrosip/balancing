@@ -3,10 +3,10 @@ spring:
     gateway:
       routes:
         - id: hello_route
-          uri: lb://say-hello
+          uri: lb://say-hello/greeting
           predicates:
             - Path=/hello
         - id: hi_route
-          uri: lb://say-hello
+          uri: lb://say-hello/hi
           predicates:
             - Path=/hi
