@@ -1,6 +1,16 @@
+
+server:
+  port: 8090
+
 spring:
+  application:
+    name: balancing
+
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: hello_route
           uri: lb://say-hello/greeting
@@ -10,3 +20,9 @@ spring:
           uri: lb://say-hello/hi
           predicates:
             - Path=/hi
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka}
+    register-with-eureka: true
