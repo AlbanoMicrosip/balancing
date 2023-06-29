@@ -3,6 +3,7 @@ package com.balancing.balancing;
 
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Flux;
@@ -54,6 +55,10 @@ class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
     } catch (Exception e) {
       return Flux.error(e);
     }
+  }
+  @Override
+  public Flux<List<ServiceInstance>> get(Request request) {
+    return get();
   }
 
 }
