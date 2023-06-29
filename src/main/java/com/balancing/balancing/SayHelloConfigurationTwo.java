@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import com.balancing.balancing.util.DNSUtil;
 
 import java.net.InetAddress;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,25 +41,30 @@ class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
   @Override
   public Flux<List<ServiceInstance>> get() {
-    try {
+    return Flux.interval(Duration.ofSeconds(30))
+      .onBackpressureLatest()
+      .map(tick -> {
+        try {
+          List<InetAddress> hosts = DNSUtil.resolve(serviceId);
+          System.out.println("Despues de resolver");
+          for (InetAddress inet : hosts) {
+            System.out.println(inet.toString());
+          }
 
-      List<InetAddress> hosts = DNSUtil.resolve(serviceId);
-      System.out.println("Despues de resolver");
-      for (InetAddress inet:hosts) {
-        System.out.println(inet.toString());
-      }
+          List<ServiceInstance> servers = hosts.stream().map(
+            host -> {
+              return new DefaultServiceInstance(serviceId + host.hashCode(), serviceId, host.getHostAddress(), port, false);
+            }
+          ).collect(Collectors.toList());
+          System.out.println("servers is " + servers);
+          return servers;
 
-      List<ServiceInstance> servers = hosts.stream().map(
-        host -> {
-          return new DefaultServiceInstance(serviceId+host.hashCode(), serviceId, host.getHostAddress(), port, false);
+        } catch (Exception e) {
+          throw new RuntimeException("Error updating server list", e);
         }
-      ).collect(Collectors.toList());
-//      servers.add(new DefaultServiceInstance(serviceId + "1", serviceId, "localhost", 8090, false));
-      System.out.println("servers is " + servers);
-      return Flux.just(servers);
-    } catch (Exception e) {
-      return Flux.error(e);
-    }
+      })
+      .onErrorResume(e -> Flux.empty()) // Si hay una excepción, emitir un Flux vacío en lugar de propagar el error
+      .share();
   }
 
 }
