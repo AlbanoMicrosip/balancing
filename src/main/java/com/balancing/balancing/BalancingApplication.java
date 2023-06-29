@@ -9,4 +9,5 @@ public class BalancingApplication {
 		SpringApplication.run(BalancingApplication.class, args);
 	}
 
+
 }
