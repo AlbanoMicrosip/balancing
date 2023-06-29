@@ -23,8 +23,8 @@ public class DNSUtil {
 
   public static List<InetAddress> resolve(String host) {
     try {
-      Lookup.getDefaultCache(DClass.IN).setMaxCache(0);
-      Lookup.getDefaultCache(DClass.IN).setMaxNCache(0);
+//      Lookup.getDefaultCache(DClass.IN).setMaxCache(30);
+//      Lookup.getDefaultCache(DClass.IN).setMaxNCache(30);
       Lookup lookup = new Lookup(host);
       Record[] result = lookup.run();
 
