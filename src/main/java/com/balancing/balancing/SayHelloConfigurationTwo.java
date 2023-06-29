@@ -40,14 +40,13 @@ class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
       List<InetAddress> hosts = DNSUtil.resolve(serviceId);
       System.out.println("Despues de resolver");
-      for (InetAddress inet:hosts
-           ) {
+      for (InetAddress inet:hosts) {
         System.out.println(inet.toString());
       }
 
       List<ServiceInstance> servers = hosts.stream().map(
         host -> {
-          return new DefaultServiceInstance(serviceId+host.hashCode(), serviceId, host.getHostAddress(), port, false);
+          return new DefaultServiceInstance(serviceId+Math.random()*100, serviceId, host.getHostAddress(), port, false);
         }
       ).collect(Collectors.toList());
 //      servers.add(new DefaultServiceInstance(serviceId + "1", serviceId, "localhost", 8090, false));
