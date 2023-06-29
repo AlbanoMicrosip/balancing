@@ -21,6 +21,7 @@ public class SayHelloConfigurationTwo {
   }
 }
 
+
 class DnsServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
   private static final Logger log = LoggerFactory.getLogger(DnsServiceInstanceListSupplier.class);
