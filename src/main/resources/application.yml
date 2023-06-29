@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hello_route
+          uri: lb://say-hello
+          predicates:
+            - Path=/hello
+        - id: hi_route
+          uri: lb://say-hello
+          predicates:
+            - Path=/hi
