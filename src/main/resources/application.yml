@@ -1,41 +1,58 @@
 
 server:
-  port: 8080
+  port: 8080 #the default port used for zuul service
 
-spring:
-  application:
-    name: balancing
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+    routes:
+      sample-service: # Service to create as sample
+        path: /sample/** #path that will be intercepted
+        url: sample-service #which url the request will e mapped to
+        stripPrefix: false  #if zuul should replace the "/sample/" segment
+        sensitiveHeaders:
 
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: hello_route
-          uri: lb://say-hello
-          predicates:
-            - Path=/hello
-        - id: hi_route
-          uri: lb://say-hello
-          predicates:
-            - Path=/hi
-      httpclient:
-        wiretap: true
-        httpserver:
-          wiretap: true
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka}
-    register-with-eureka: true
-
-logging:
-  level:
-    reactor:
-      netty: INFO
-    org:
-      springframework:
-        cloud:
-          gateway: TRACE
+#################### Spring Cloud Gateway ########################
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: balancing
+#
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#      routes:
+#        - id: hello_route
+#          uri: lb://say-hello
+#          predicates:
+#            - Path=/hello
+#        - id: hi_route
+#          uri: lb://say-hello
+#          predicates:
+#            - Path=/hi
+#      httpclient:
+#        wiretap: true
+#        httpserver:
+#          wiretap: true
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka}
+#    register-with-eureka: true
+#
+#logging:
+#  level:
+#    reactor:
+#      netty: INFO
+#    org:
+#      springframework:
+#        cloud:
+#          gateway: TRACE
