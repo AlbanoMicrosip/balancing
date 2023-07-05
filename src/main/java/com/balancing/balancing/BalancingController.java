@@ -35,4 +35,9 @@ public class BalancingController {
       return "No service instance available.";
     }
   }
+
+  @GetMapping("/call-say-instance")
+  public String callSayInstanceFix() {
+      return restTemplate.getForObject("http://say-hello1:8080/", String.class);
+  }
 }
