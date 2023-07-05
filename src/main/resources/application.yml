@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: balancing
 
 server:
   port: 8080 #the default port used for zuul service
