@@ -36,7 +36,7 @@ public class BalancingController {
     }
   }
 
-  @GetMapping("/call-say-instance")
+  @GetMapping("/call-say-instance-fix")
   public String callSayInstanceFix() {
       return restTemplate.getForObject("http://say-hello1:8080/", String.class);
   }
