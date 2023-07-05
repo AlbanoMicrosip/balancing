@@ -1,7 +1,8 @@
 package com.balancing.balancing;
 
 import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class BalancingController {
   private final RestTemplate restTemplate;
   private final DiscoveryClient discoveryClient;
 
+  @Autowired
   public BalancingController(RestTemplate restTemplate, DiscoveryClient discoveryClient) {
     this.restTemplate = restTemplate;
     this.discoveryClient = discoveryClient;
@@ -23,12 +25,12 @@ public class BalancingController {
 
   @GetMapping("/call-say-instance")
   public String callSayInstance() {
-    List<InstanceInfo> instances = discoveryClient.getInstancesById("SAY-INSTANCE");
+    List<ServiceInstance> instances = discoveryClient.getInstances("SAY-INSTANCE");
     if (instances != null && !instances.isEmpty()) {
-      String uri = instances.get(0).getHomePageUrl();
+      URI uri = instances.get(0).getUri();
       System.out.println("URL:::::::");
-      System.out.println(uri);
-      return restTemplate.getForObject(uri + "/", String.class);
+      System.out.println(uri.toString());
+      return restTemplate.getForObject(uri + "/say", String.class);
     } else {
       return "No service instance available.";
     }
