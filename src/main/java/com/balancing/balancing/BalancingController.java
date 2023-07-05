@@ -30,7 +30,7 @@ public class BalancingController {
       URI uri = instances.get(0).getUri();
       System.out.println("URL:::::::");
       System.out.println(uri.toString());
-      return restTemplate.getForObject(uri + "/say", String.class);
+      return restTemplate.getForObject(uri + "/", String.class);
     } else {
       return "No service instance available.";
     }
