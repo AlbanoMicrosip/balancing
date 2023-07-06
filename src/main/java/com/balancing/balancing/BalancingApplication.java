@@ -22,9 +22,9 @@ public class BalancingApplication {
 
 	@Bean
 	@Qualifier("balanced")
-	public WebClient webClient(ReactorLoadBalancerExchangeFilterFunction lbFunction) {
+	public WebClient webClient(ReactorLoadBalancerExchangeFilterFunction loadBFunction) {
 		return WebClient.builder()
-			.filter(lbFunction)
+			.filter(loadBFunction)
 			.build();
 	}
 
