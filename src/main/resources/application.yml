@@ -12,9 +12,7 @@ server:
           uri: lb://SAY-INSTANCE
           predicates:
             - Path=/redireccion/say/**
-    loadbalancer:
-      ribbon:
-        enabled: false
+
 
 eureka:
   client:

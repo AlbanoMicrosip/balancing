@@ -22,7 +22,7 @@ public class BalancingController {
 
   @GetMapping("/call-say-instance")
   public Mono<String> callSayInstance() {
-    return webClient.get().uri("http://SAY-INSTANCE").retrieve().bodyToMono(String.class);
+    return webClient.get().uri("http://SAY-INSTANCE/").retrieve().bodyToMono(String.class);
   }
 
   @GetMapping("/call-say-instance-fix")
