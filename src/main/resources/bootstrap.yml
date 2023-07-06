@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: balancing
+
+server:
+  port: 8080 #the default port used for zuul service
+
+  cloud:
+    gateway:
+      routes:
+        - id: say-instance
+          uri: lb://SAY-INSTANCE
+          predicates:
+            - Path=/redireccion/say/**
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+#################### Spring Cloud Gateway ########################
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: balancing
+#
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#      routes:
+#        - id: hello_route
+#          uri: lb://say-hello
+#          predicates:
+#            - Path=/hello
+#        - id: hi_route
+#          uri: lb://say-hello
+#          predicates:
+#            - Path=/hi
+#      httpclient:
+#        wiretap: true
+#        httpserver:
+#          wiretap: true
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka}
+#    register-with-eureka: true
+#
+#logging:
+#  level:
+#    reactor:
+#      netty: INFO
+#    org:
+#      springframework:
+#        cloud:
+#          gateway: TRACE
