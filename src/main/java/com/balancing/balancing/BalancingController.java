@@ -4,29 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class BalancingController {
 
-  private final RestTemplate restTemplate;
+  private final WebClient webClient;
 
-  private final RestTemplate restTemplateNotBalanced;
+  private final WebClient webClientNotBalanced;
 
   @Autowired
-  public BalancingController(@Qualifier("balanced") RestTemplate restTemplate, @Qualifier("notbalanced") RestTemplate restTemplateNotBalanced) {
-    this.restTemplate = restTemplate;
-    this.restTemplateNotBalanced = restTemplateNotBalanced;
+  public BalancingController(@Qualifier("balanced") WebClient webClient, @Qualifier("notbalanced") WebClient webClientNotBalanced) {
+    this.webClient = webClient;
+    this.webClientNotBalanced = webClientNotBalanced;
   }
 
   @GetMapping("/call-say-instance")
-  public String callSayInstance() {
-      return restTemplate.getForObject("http://SAY-INSTANCE" + "/", String.class);
+  public Mono<String> callSayInstance() {
+    return webClient.get().uri("http://SAY-INSTANCE").retrieve().bodyToMono(String.class);
   }
 
   @GetMapping("/call-say-instance-fix")
-  public String callSayInstanceFix() {
-      return restTemplate.getForObject("http://say-hello1:8080/", String.class);
+  public Mono<String> callSayInstanceFix() {
+    return webClient.get().uri("http://say-hello1:8080/").retrieve().bodyToMono(String.class);
   }
 }

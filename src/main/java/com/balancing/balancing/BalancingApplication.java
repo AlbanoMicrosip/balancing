@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -16,16 +16,22 @@ public class BalancingApplication {
 	}
 
 	@Bean
-	@LoadBalanced
+	public ReactorLoadBalancerExchangeFilterFunction lbFunction(ReactorLoadBalancerExchangeFilterFunction lbFunction) {
+		return lbFunction;
+	}
+
+	@Bean
 	@Qualifier("balanced")
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
+	public WebClient webClient(ReactorLoadBalancerExchangeFilterFunction lbFunction) {
+		return WebClient.builder()
+			.filter(lbFunction)
+			.build();
 	}
 
 	@Bean
 	@Qualifier("notbalanced")
-	public RestTemplate restTemplateNotBalanced() {
-		return new RestTemplate();
+	public WebClient webClientNotBalanced() {
+		return WebClient.builder().build();
 	}
 
 }
