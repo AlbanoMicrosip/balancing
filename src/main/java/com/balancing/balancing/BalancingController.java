@@ -27,6 +27,6 @@ public class BalancingController {
 
   @GetMapping("/call-say-instance-fix")
   public Mono<String> callSayInstanceFix() {
-    return webClient.get().uri("http://say-hello1:8080/").retrieve().bodyToMono(String.class);
+    return webClientNotBalanced.get().uri("http://say-hello1:8080/").retrieve().bodyToMono(String.class);
   }
 }
