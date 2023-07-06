@@ -1,5 +1,6 @@
 package com.balancing.balancing;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -16,7 +17,14 @@ public class BalancingApplication {
 
 	@Bean
 	@LoadBalanced
+	@Qualifier("balanced")
 	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+	@Bean
+	@Qualifier("notbalanced")
+	public RestTemplate restTemplateNotBalanced() {
 		return new RestTemplate();
 	}
 

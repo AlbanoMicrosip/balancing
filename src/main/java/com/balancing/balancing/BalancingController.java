@@ -1,7 +1,7 @@
 package com.balancing.balancing;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -10,12 +10,14 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class BalancingController {
 
-  @LoadBalanced
   private final RestTemplate restTemplate;
 
+  private final RestTemplate restTemplateNotBalanced;
+
   @Autowired
-  public BalancingController(RestTemplate restTemplate) {
+  public BalancingController(@Qualifier("balanced") RestTemplate restTemplate, @Qualifier("notbalanced") RestTemplate restTemplateNotBalanced) {
     this.restTemplate = restTemplate;
+    this.restTemplateNotBalanced = restTemplateNotBalanced;
   }
 
   @GetMapping("/call-say-instance")
