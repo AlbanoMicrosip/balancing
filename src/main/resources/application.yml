@@ -1,14 +1,14 @@
+server:
+  port: 8080 #the default port used for zuul service
+
 spring:
   application:
     name: balancing
-
-server:
-  port: 8080 #the default port used for zuul service
   cloud:
     gateway:
       routes:
         - id: say-instance
-          uri: SAY-INSTANCE
+          uri: lb://SAY-INSTANCE
           predicates:
             - Path=/redireccion/say/**
 
