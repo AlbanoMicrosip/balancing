@@ -8,7 +8,7 @@ spring:
     gateway:
       routes:
         - id: say-instance
-          uri: lb://SAY-INSTANCE
+          serviceId: SAY-INSTANCE
           predicates:
             - Path=/redireccion/say/**
 
