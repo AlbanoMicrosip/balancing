@@ -4,16 +4,20 @@ server:
 spring:
   application:
     name: balancing
-    cloud:
-      gateway:
-        discovery:
-          locator:
-            enabled: true
-        routes:
-          - id: say-instance
-            uri: lb://SAY-INSTANCE
-            predicates:
-              - Path=/redireccion/say/**
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: customers
+          uri: lb://customer-service
+          predicates:
+            - Path=/customer/**
+        - id: restaurants
+          uri: lb://restaurant-service
+          predicates:
+            - Path=/restaurant/**
 
 
 eureka:
