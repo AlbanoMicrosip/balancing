@@ -13,6 +13,13 @@ spring:
             - Path=/redireccion/say/**
           filters:
             - RewritePath=/redireccion/say(?<segment>/?.*), $\{segment}
+        - id: goodbye-instance
+          uri: lb://GOODBYE-INSTANCE
+          predicates:
+            - Path=/redireccion/bye/**
+          filters:
+            - StripPrefix=2
+
 
 eureka:
   client:
