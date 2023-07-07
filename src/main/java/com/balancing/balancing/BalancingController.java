@@ -16,7 +16,7 @@ public class BalancingController {
   private final WebClient.Builder webClientBuilderNotBalanced;
 
   @Autowired
-  public BalancingController(@Qualifier("balanced") WebClient.Builder webClientBuilder, @Qualifier("balanced") WebClient.Builder webClientBuilderNotBalanced) {
+  public BalancingController(@Qualifier("balanced") WebClient.Builder webClientBuilder, @Qualifier("notBalanced") WebClient.Builder webClientBuilderNotBalanced) {
     this.webClientBuilder = webClientBuilder;
     this.webClientBuilderNotBalanced = webClientBuilderNotBalanced;
   }
