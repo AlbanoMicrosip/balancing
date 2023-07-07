@@ -9,7 +9,7 @@ server:
     gateway:
       routes:
         - id: say-instance
-          uri: lb://SAY-INSTANCE
+          uri: SAY-INSTANCE
           predicates:
             - Path=/redireccion/say/**
 
