@@ -10,7 +10,7 @@ spring:
         - id: say-instance
           uri: lb://SAY-INSTANCE
           predicates:
-            - Path=/**
+            - Path=/redireccion/say/**
           filters:
             - RewritePath=/redireccion/say/(?<segment>/?.*), $\{segment}
 
