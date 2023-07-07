@@ -16,10 +16,11 @@ public class BalancingApplication {
 		SpringApplication.run(BalancingApplication.class, args);
 	}
 
-//	@LoadBalanced
-//	@Bean
-//	WebClient.Builder webClientBuilder() {
-//		return WebClient.builder();
-//	}
+	@LoadBalanced
+	@Bean
+	public WebClient.Builder webClientBuilder() {
+		return WebClient.builder();
+	}
+
 
 }
