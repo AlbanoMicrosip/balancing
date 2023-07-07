@@ -11,6 +11,8 @@ spring:
           uri: lb://SAY-INSTANCE/
           predicates:
             - Path=/redireccion/say/**
+          filters:
+            - RewritePath=/redireccion/say/(?<segment>.*), /$\{segment}
 
 
 eureka:

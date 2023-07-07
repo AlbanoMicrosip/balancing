@@ -13,17 +13,5 @@ public class BalancingApplication {
 		SpringApplication.run(BalancingApplication.class, args);
 	}
 
-//	@Bean
-//	@Qualifier("balanced")
-//	@LoadBalanced
-//	public WebClient webClient() {
-//		return WebClient.builder().build();
-//	}
-//
-//	@Bean
-//	@Qualifier("notbalanced")
-//	public WebClient webClientNotBalanced() {
-//		return WebClient.builder().build();
-//	}
 
 }
