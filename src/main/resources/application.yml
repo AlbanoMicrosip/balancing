@@ -12,7 +12,7 @@ spring:
           predicates:
             - Path=/redireccion/say/**
           filters:
-            - RewritePath=/redireccion/say/(?<segment>/?.*), $\{segment}
+            - RewritePath=/redireccion/say(?<segment>/?.*), $\{segment}
 
 eureka:
   client:
