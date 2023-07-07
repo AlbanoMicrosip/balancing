@@ -1,5 +1,6 @@
 package com.balancing.balancing;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,7 +19,15 @@ public class BalancingApplication {
 
 	@LoadBalanced
 	@Bean
+	@Qualifier("balanced")
 	public WebClient.Builder webClientBuilder() {
+		return WebClient.builder();
+	}
+
+	@LoadBalanced
+	@Bean
+	@Qualifier("notBalanced")
+	public WebClient.Builder webClientBuilderNotBalanced() {
 		return WebClient.builder();
 	}
 
