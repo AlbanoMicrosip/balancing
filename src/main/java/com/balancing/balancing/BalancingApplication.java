@@ -25,7 +25,6 @@ public class BalancingApplication {
 	}
 
 
-	@LoadBalanced
 	@Bean
 	@Qualifier("notBalanced")
 	public WebClient.Builder webClientBuilderNotBalanced() {
