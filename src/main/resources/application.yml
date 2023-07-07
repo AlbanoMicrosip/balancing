@@ -10,14 +10,10 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: customers
-          uri: lb://customer-service
+        - id: say-instance
+          uri: lb://SAY-INSTANCE
           predicates:
-            - Path=/customer/**
-        - id: restaurants
-          uri: lb://restaurant-service
-          predicates:
-            - Path=/restaurant/**
+            - Path=/redireccion/say/**
 
 
 eureka:
