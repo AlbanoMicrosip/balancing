@@ -8,9 +8,9 @@ spring:
     gateway:
       routes:
         - id: say-instance
-          uri: lb://SAY-INSTANCE/
+          uri: lb://SAY-INSTANCE
           predicates:
-            - Path=/redireccion/say/**
+            - Path=/**
 
 
 eureka:
